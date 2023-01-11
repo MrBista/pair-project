@@ -17,6 +17,7 @@ class ControllerAuth {
       if (user) {
         const isValidPassword = bcrypt.compareSync(password, user.password)
         if (isValidPassword) {
+          console.log(user.id);
           req.session.userId = user.id
           return res.redirect('/')
         } else {

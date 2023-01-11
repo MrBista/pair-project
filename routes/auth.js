@@ -6,6 +6,7 @@ const route = express.Router();
 route.get('/logout', ControllerAuth.getLogOut)
 route.use(checkedIsLogOut)
 
+route.get('/', ControllerAuth.renderLogin)
 route.get('/login', ControllerAuth.renderLogin)
 
 route.post('/login', ControllerAuth.postLogin)

@@ -23,8 +23,8 @@ app.use(
 
 app.use('/', route);
 
-app.listen(9000, () => {
-  console.log('server listen to the port 9000');
+app.listen(2000, () => {
+  console.log('server listen to the port 2000');
 });
 
 // coba bisa gak

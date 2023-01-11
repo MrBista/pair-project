@@ -17,15 +17,18 @@ class ControllerAuth {
       if (user) {
         const isValidPassword = bcrypt.compareSync(password, user.password)
         if (isValidPassword) {
-          req.session.userId = user.id
+       ;
+          // req.session.userId = user.id
+          req.session.role=user.role;
+          console.log(user.role);
           return res.redirect('/')
         } else {
           const errorMessage = 'Invalid username/password'
-          return res.redirect(`/user/login?error=${errorMessage}`)
+          return res.redirect(`/login?error=${errorMessage}`)
         }
       }else {
         const errorMessage = `There is no user with email ${email}`
-        return res.redirect(`/user/login?error=${errorMessage}`)
+        return res.redirect(`/login?error=${errorMessage}`)
       }
 
     })
@@ -59,7 +62,7 @@ class ControllerAuth {
       if (err) {
         console.log(err)
       } else {
-        res.redirect('/user/login')
+        res.redirect('/login')
       }
     })
   }

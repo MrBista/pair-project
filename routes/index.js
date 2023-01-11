@@ -4,7 +4,7 @@ const { checkedIsLogin } = require('../middlewares/auth')
 const route = express.Router()
 const authRoute = require('./auth')
 
-route.use('/user',authRoute)
+route.use('/',authRoute)
 
 route.use(checkedIsLogin)
 

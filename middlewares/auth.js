@@ -1,13 +1,10 @@
 const checkedIsLogOut = (req, res, next) => {
   if (req.session.role) {
-    if(req.session.role==='admin'){
-      res.redirect('/admin')
-    }else{
       res.redirect(`/`)
     }
-  } else {
-    next()
-  }
+    else {
+      next()
+    }
 }
 
 const checkedIsLogin = (req, res, next) => {

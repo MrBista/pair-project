@@ -17,11 +17,15 @@ class ControllerAuth {
       if (user) {
         const isValidPassword = bcrypt.compareSync(password, user.password)
         if (isValidPassword) {
-       ;
+       
           // req.session.userId = user.id
           req.session.role=user.role;
-          console.log(user.role);
-          return res.redirect('/')
+          if(user.role==="admin"){
+            console.log("masuk sini");
+            return res.redirect('/admin')
+          }else{
+            return res.redirect('/blabla')
+          }
         } else {
           const errorMessage = 'Invalid username/password'
           return res.redirect(`/login?error=${errorMessage}`)
@@ -49,7 +53,7 @@ class ControllerAuth {
     
     User.create({name, email, password, role})
     .then((result) => {
-      res.redirect('/user/login')
+      res.redirect('/login')
     })
     .catch((err) => {
       console.log(err)

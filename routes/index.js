@@ -8,7 +8,7 @@ route.use('/',authRoute)
 
 route.use(checkedIsLogin)
 
-route.get('/', Controller.renderHome)
+route.get('/admin', Controller.renderHome) 
 
 
 module.exports = route

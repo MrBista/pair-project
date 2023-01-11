@@ -2,23 +2,32 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
    up(queryInterface, Sequelize) {
-    return queryInterface.createTable('Users', {
+    return queryInterface.createTable('Recipes', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING,
-        unique:true
+      UserId: {
+        type: Sequelize.INTEGER,
+        references:{
+          model:"Users",
+          key:'id'
+        }
       },
-      email: {
-        type: Sequelize.STRING,
-        unique:true
+      BookId: {
+        type: Sequelize.INTEGER,
+        references:{
+          model:"Books",
+          key:'id'
+        }
       },
-      password: {
-        type: Sequelize.STRING
+      checkOutDate: {
+        type: Sequelize.DATE
+      },
+      expiredDate: {
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +40,6 @@ module.exports = {
     });
   },
    down(queryInterface, Sequelize) {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('Recipes');
   }
 };

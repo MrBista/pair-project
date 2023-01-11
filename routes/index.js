@@ -9,6 +9,7 @@ route.use('/user',authRoute)
 route.use(checkedIsLogin)
 
 route.get('/', Controller.renderHome)
+// router.get('/books')
 
 
 module.exports = route

@@ -75,14 +75,14 @@
           >
             Sign Up
           </h2>
-          <div class="absolute [&>*:nth-child(odd)]:mt-8 bottom-9">
-            <% if (errorMessage) { %>
+          <div class="absolute [&>*:nth-child(odd)]:mt-8 top-0" style="margin-top: 13px;">
+           
               <div>
-                <% errorMessage.forEach(element => { %>
+                <% errorMessage?.split(';')?.forEach(element => { %>
                   <p class="text-red-500 "><%= element %></p>
                 <% }) %> 
               </div>
-            <% } %>
+          
 
           </div>
           <div class="mt-12 ">

@@ -5,7 +5,10 @@ const { Category, Book, User, Receipt, Profile } = require('../models/index');
 
 class Controller {
   static userHome(req, response) {
-    Book.findAll({where:{stock:{[Op.gt]:0}}})
+      const input=req.query.input;
+      // {where:{stock:{[Op.gt]:0}}}
+      if(!input){
+        Book.findAll()
       .then((result) => {
         // response.send(result);
 
@@ -14,6 +17,18 @@ class Controller {
       .catch((err) => {
         response.send(err);
       });
+      }else if(input){
+      Book.findAll({where:{tittle:{[Op.iLike]: input},stock:{[Op.gt]:0}}})
+      .then((result) => {
+        // response.send(result);
+
+        response.render('user', { result });
+      })
+      .catch((err) => {
+        response.send(err);
+      });
+      }
+      
   }
 
   static bookDetail(req, response) {
@@ -245,6 +260,8 @@ class Controller {
       response.send(err)
     });
   }
+
+  
 }
 
 module.exports = Controller;

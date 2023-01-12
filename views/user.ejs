@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-indigo-50">
-    <%- include('./navbar.ejs') %>
-    <main class="w-[90vw] max-w-[1200px] border-2 border-black m-auto">
-      <h2>Category Books</h2>
-      <div class="w-[100%] flex justify-center flex-wrap gap-7">
-        <% result.forEach(el => { %>
-        <div class="card w-[250px] mt-3 shadow-2xl">
-          <div class="w-[100%] h-[300px] rounded-lg">
-            <a href="/book/detail/<%= el.id%>">
-              <img
-                src="<%= el.imgUrl %> "
-                alt=""
-                class="object-cover w-[100%] h-[100%] rounded-sm shadow-lg"
-              />
-            </a>
-          </div>
-          <div
-            class="w-[100%] border border-black flex justify-center mt-1 rounded-lg"
-          >
-            <br />
-            <% if (el.stock==='0') { %>
-             ejs <a href="/"><button disabled>Out of stock</button></a>
-            <% } else{ %>
-            <a href="/borrow/<%=el.id%>">Borrow This Book!</a>
-            <% } %> 
-          </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-indigo-50">
+  <%- include('./navbar.ejs') %>
+  <main class="w-[90vw] max-w-[1200px] border-2 border-black m-auto">
+    <h2>Category Books</h2>
+    <div class="w-[100%] flex justify-center flex-wrap gap-7">
+      <% result.forEach(el => { %>
+      <div class="card w-[250px] mt-3 shadow-2xl">
+        <div class="w-[100%] h-[300px] rounded-lg">
+          <a href="/book/detail/<%= el.id%>">
+            <img src="<%= el.imgUrl %> " alt="" class="object-cover w-[100%] h-[100%] rounded-sm shadow-lg" />
+          </a>
         </div>
-        <% }) %>
+        <p> Title:<%= el.tittle %> <br>
+          Stock :<%= el.stock %> <br>Author:<%= el.author %> <br>
+          ISBN: <%= el.isbn %> </p>
+        <%if( el.stock===0){ %>
+
+        <div class="w-[100%] border border-black flex justify-center mt-1 rounded-lg">
+          <br />
+          <a href="/"> <button disabled>Out Of Stock Book!</button></a>
+        </div>
       </div>
-    </main>
-  </body>
+      <% }else{ %>
+      <div class="w-[100%] border border-black flex justify-center mt-1 rounded-lg">
+        <br />
+        <a href="/borrow/<%=el.id%>">Borrow This Book!</a>
+      </div>
+    </div>
+    <% } %>
+    <% }) %>
+    </div>
+  </main>
+</body>
+
 </html>

@@ -3,7 +3,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const express = require('express');
 const app = express();
-app.use(express.static(__dirname + '/public'));
 const route = require('./routes/index');
 const session = require('express-session');
 

@@ -1,8 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
-const bcrypt = require('bcryptjs')
+const { Model } = require('sequelize');
+const bcrypt = require('bcryptjs');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -11,28 +9,73 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      User.hasOne(models.Profile)
+      User.hasOne(models.Profile);
     }
   }
-  User.init({
-    name: {
-      type:DataTypes.STRING,
-      unique:true
+  User.init(
+    {
+      name: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Please Filled name section',
+          },
+          notEmpty: {
+            msg: 'Please Filled name section',
+          },
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Please Filled name section',
+          },
+          notEmpty: {
+            msg: 'Please Filled name section',
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isStrong(value) {
+            let strongPassword = new RegExp(
+              '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})'
+            );
+            let mediumPassword = new RegExp(
+              '((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))'
+            );
+            if (strongPassword.test(value)) {
+              throw new Error('Password Strong');
+            } else if (mediumPassword.test(value)) {
+              throw new Error('Password almost strong');
+            } else {
+              throw new Error('Password too weak');
+            }
+          },
+          min: {
+            args: 10,
+            msg: '',
+          },
+        },
+      },
+      role: DataTypes.STRING,
     },
-    email: {
-      type:DataTypes.STRING,
-      unique:true
-    },
-    password: DataTypes.STRING,
-    role:DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
+    {
+      sequelize,
+      modelName: 'User',
+    }
+  );
   User.addHook('beforeCreate', (instance, option) => {
-    const salt = bcrypt.genSaltSync(10)
-    const hashedPassword = bcrypt.hashSync(instance.password, salt)
-    instance.password = hashedPassword
-  })
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(instance.password, salt);
+    instance.password = hashedPassword;
+  });
   return User;
 };

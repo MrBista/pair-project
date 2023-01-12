@@ -1,3 +1,4 @@
+******Input
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,12 +23,29 @@ rel="stylesheet"
 />
 </head>
 <body>
-  
-  <a href="/admin/addBook"> <button class="btn btn-primary"> Add Book</button></a>
-  <a href="/admin/addCategory"> <button class="btn btn-primary"> Add Category</button></a>
+    <H1>Add Book</H1>
+    <div class="container ">
+        <div class="row">
+          <div class="d-flex justify content-center">
 
 
+            <form action="/admin/addCategory" method="post">
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                  <input type="text" id="form1Example1" name="name" class="form-control" />
+                  <label class="form-label" for="form1Example1">Name</label>
+                </div>
 
+              
+
+              
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+              </form>
+        </div>
+    </div>
+  </div>
+    <!-- MDB -->
 <script
 type="text/javascript"
 src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"

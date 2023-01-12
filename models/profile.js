@@ -11,6 +11,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Profile.belongsTo(models.User);
     }
+    get birtdateS(){
+      return this.birtdate
+        .toLocaleString('id-ID', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        })
+        .replace(/(\d+)\/(\d+)\/(\d+)/, '$3-$1-$2');
+    }
   }
   Profile.init(
     {

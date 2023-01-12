@@ -23,7 +23,7 @@
           </form>
         </div>
         <ul class="flex justify-between">
-          <li><a href="" class="text-lg text-indigo-500">My Book</a></li>
+          <li><a href="/mybook" class="text-lg text-indigo-500">My Book</a></li>
           <li>
             <a href="/user/logout" class="text-lg ml-9 text-indigo-500"
               >Log Out</a
@@ -35,22 +35,27 @@
     <main class="w-[90vw] max-w-[1200px] border-2 border-black m-auto">
       <h2>Category Books</h2>
       <div class="w-[100%] flex justify-center flex-wrap gap-7">
-        <div class="card w-[250px] mt-3 shadow-2xl">
-          <div class="w-[100%] h-[300px] rounded-lg">
-            <img
-              src="https://source.unsplash.com/4cA0t0_7LOc"
-              alt=""
-              class="object-cover w-[100%] h-[100%] rounded-sm shadow-lg"
-            />
+        <% result.forEach(el => { %>
+          <div class="card w-[250px] mt-3 shadow-2xl">
+            <div class="w-[100%] h-[300px] rounded-lg">
+              <a href="/book/detail/<%= el.id%>">
+              <img
+                src="<%= el.imgUrl %> "
+                alt=""
+                class="object-cover w-[100%] h-[100%] rounded-sm shadow-lg"
+              />
+            </a>
+            </div>
+            <div
+              class="w-[100%] border border-black flex justify-center mt-1 rounded-lg"
+            >
+            <br>
+            <a href="/borrow/<%=el.id%>"> This Shit</a>
           </div>
-          <div
-            class="w-[100%] border border-black flex justify-center mt-1 rounded-lg"
-          >
-            <button class="text-center cursor-pointer w-[100%] h-[100%]">
-              Borrow
-            </button>
+             
           </div>
-        </div>
+        <% }) %>
+       
       </div>
     </main>
   </body>

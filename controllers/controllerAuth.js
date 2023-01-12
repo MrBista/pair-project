@@ -42,7 +42,10 @@ class ControllerAuth {
   }
 
   static renderRegister(req, res) {
-    res.render('register');
+    let errors = req.query.error;
+    errors = errors.split(';');
+    // res.send(errors);
+    res.render('register', { errorMessage: errors });
   }
 
   static postRegister(req, res) {
@@ -55,8 +58,10 @@ class ControllerAuth {
         res.redirect('/user/login');
       })
       .catch((err) => {
-        console.log(err);
-        res.send(err);
+        const errorMessage = err.errors.map((el) => el.message);
+        // console.log(errorMessage, '<=======');
+        // res.send(errorMessage);
+        res.redirect(`/user/register?error=${errorMessage.join(';')}`);
       });
   }
 

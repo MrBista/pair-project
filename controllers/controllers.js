@@ -174,13 +174,30 @@ class Controller {
     })
       .then((result) => {
         // response.send(result);
-        response.render('profile', { result });
+        response.render('profile', { user: result });
       })
       .catch((err) => {
         response.send(err);
       });
 
     // response.render('profile');
+  }
+
+  static renderUserEditProfile(req, response) {
+    const id = req.session.userId;
+    Profile.findOne({
+      where: {
+        UserId: id,
+      },
+    })
+      .then((user) => {
+        // response.send(data);
+
+        response.render('editProfile', { user });
+      })
+      .catch((err) => {
+        response.send(err);
+      });
   }
 }
 

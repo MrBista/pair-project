@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 const route = require('./routes/index');
 const session = require('express-session');
-const PORT = 5000;
+const PORT = 2020;
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));

@@ -81,7 +81,8 @@ module.exports = (sequelize, DataTypes) => {
   User.afterCreate((instance, option) => {
     sequelize.models.Profile.create({
       name: instance.name,
-      imgUrl: null,
+      imgurl:
+        'https://i.pinimg.com/originals/1c/53/c5/1c53c5b3f3c6e788bfd32f2b4d54ed59.jpg',
       birtdate: null,
       gender: null,
       UserId: instance.id,

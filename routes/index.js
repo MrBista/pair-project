@@ -13,6 +13,7 @@ route.get('/book/detail/:id', Controller.bookDetail);
 route.get('/borrow/:id', Controller.borrowBook);
 route.get('/mybook', Controller.myBook);
 route.get('/profile', Controller.renderUserProfile);
+route.get('/profile/edit', Controller.renderUserEditProfile);
 
 // middleware untuk cek role admin
 route.use(checkIsAdmin);

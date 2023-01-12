@@ -17,8 +17,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       name: {
         type: DataTypes.STRING,
-        unique: true,
         allowNull: false,
+        unique: {
+          arg: true,
+          msg: 'This username is already taken.'
+        },
         validate: {
           notNull: {
             msg: 'Please Filled name section',
@@ -30,41 +33,63 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: {
         type: DataTypes.STRING,
-        unique: true,
         allowNull: false,
+        unique: {
+          arg: true,
+          msg: 'This email is already taken.'
+        },
         validate: {
           notNull: {
-            msg: 'Please Filled name section',
+            msg: 'Please Filled email section',
           },
           notEmpty: {
-            msg: 'Please Filled name section',
+            msg: 'Please Filled email section',
           },
         },
       },
       password: {
         type: DataTypes.STRING,
-        // allowNull: false,
-        // validate: {
-        //   isStrong(value) {
-        //     let strongPassword = new RegExp(
-        //       '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})'
-        //     );
-        //     let mediumPassword = new RegExp(
-        //       '((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))'
-        //     );
-        //     if (strongPassword.test(value)) {
-        //       throw new Error('Password Strong');
-        //     } else if (mediumPassword.test(value)) {
-        //       throw new Error('Password almost strong');
-        //     } else {
-        //       throw new Error('Password too weak');
-        //     }
-        //   },
-        //   min: {
-        //     args: 10,
-        //     msg: '',
-        //   },
-        // },
+        allowNull: false,
+        validate: {
+          
+          min: {
+            args: 10,
+            msg: 'Minimum word is 10',
+          },
+          notEmpty: {
+            msg:'Please filled password section'
+          },
+          notNull:{
+            msg:'Please filled password section'
+          },
+          isStrong(value) {
+            const isNonWhiteSpace = /^\S*$/;
+            if (!isNonWhiteSpace.test(value)) {
+              throw new Error ("Password must not contain Whitespaces.");
+            }
+
+            const isContainsUppercase = /^(?=.*[A-Z]).*$/;
+            if (!isContainsUppercase.test(value)) {
+              throw new Error ("Password must have at least one Uppercase Character.");
+            }
+
+            const isContainsLowercase = /^(?=.*[a-z]).*$/;
+            if (!isContainsLowercase.test(value)) {
+              throw new Error ("Password must have at least one Lowercase Character.");
+            }
+
+            const isContainsNumber = /^(?=.*[2-9]).*$/;
+            if (!isContainsNumber.test(value)) {
+              throw new Error ("Password must contain at least 2 Digit.");
+            }
+
+            const isValidLength = /^.{5,16}$/;
+            if (!isValidLength.test(value)) {
+              throw new Error ("Password must be 10-16 Characters Long.");
+            }
+
+          },
+        },
       },
       role: DataTypes.STRING,
     },
@@ -77,6 +102,7 @@ module.exports = (sequelize, DataTypes) => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(instance.password, salt);
     instance.password = hashedPassword;
+    instance.role = 'user';
   });
   User.afterCreate((instance, option) => {
     sequelize.models.Profile.create({
@@ -88,5 +114,6 @@ module.exports = (sequelize, DataTypes) => {
       UserId: instance.id,
     });
   });
+
   return User;
 };

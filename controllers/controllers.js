@@ -1,6 +1,10 @@
 class Controller {
   static renderHome(req, res) {
-    res.render('index')
+    res.render('index');
+  }
+
+  static homeAdmin(req, res) {
+    res.render('admin');
   }
 }
 

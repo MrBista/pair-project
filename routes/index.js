@@ -12,8 +12,6 @@ route.get('/', Controller.renderHome);
 
 // middleware untuk cek role admin
 route.use(checkIsAdmin);
-route.get('/admin', (req, res) => {
-  res.send('ini admin ges');
-});
+route.get('/admin', Controller.homeAdmin);
 
 module.exports = route;

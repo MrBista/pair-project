@@ -1,6 +1,5 @@
-
 const { sendEmailCheckout } = require('../helpers/send_email');
-const{Category,Book,User,Receipt,Profile}= require('../models/index')
+const { Category, Book, User, Receipt, Profile } = require('../models/index');
 
 class Controller {
   static userHome(req, response) {
@@ -53,7 +52,8 @@ class Controller {
       ],
     })
       .then((data) => {
-        res.render('admin');
+        // res.send(data);
+        res.render('admin', { data });
       })
       .catch((err) => {
         console.log(err);
@@ -135,19 +135,18 @@ class Controller {
         });
       })
 
-    .then((value) => {     
-      return Book.decrement({stock: 1}, { where: { id: id } })
-    })
-    .then((value) => { 
-      let mail=req.session.email
-      sendEmailCheckout(mail,today,tommorow);
-      response.redirect('back')
-    })
-    }).catch((err) => {
-      console.log(err);
-      response.send(err)
-    });
-
+      .then((value) => {
+        return Book.decrement({ stock: 1 }, { where: { id: id } });
+      })
+      .then((value) => {
+        let mail = req.session.email;
+        sendEmailCheckout(mail, today, tommorow);
+        response.redirect('back');
+      })
+      .catch((err) => {
+        console.log(err);
+        response.send(err);
+      });
   }
 
   static myBook(req, response) {
@@ -164,6 +163,24 @@ class Controller {
         console.log(err);
         response.send(err);
       });
+  }
+
+  static renderUserProfile(req, response) {
+    let id = req.session.userId;
+    Profile.findOne({
+      where: {
+        UserId: id,
+      },
+    })
+      .then((result) => {
+        // response.send(result);
+        response.render('profile', { result });
+      })
+      .catch((err) => {
+        response.send(err);
+      });
+
+    // response.render('profile');
   }
 }
 

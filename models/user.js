@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.hasOne(models.Profile);
-      User.hasMany(models.Receipt)
+      User.hasMany(models.Receipt);
     }
   }
   User.init(
@@ -77,6 +77,15 @@ module.exports = (sequelize, DataTypes) => {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(instance.password, salt);
     instance.password = hashedPassword;
+  });
+  User.afterCreate((instance, option) => {
+    sequelize.models.Profile.create({
+      name: instance.name,
+      imgUrl: null,
+      birtdate: null,
+      gender: null,
+      UserId: instance.id,
+    });
   });
   return User;
 };

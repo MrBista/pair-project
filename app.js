@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 const route = require('./routes/index');
 const session = require('express-session');
+const PORT = 5000;
 
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: false }));
@@ -22,8 +23,8 @@ app.use(
 
 app.use('/', route);
 
-app.listen(2000, () => {
-  console.log('server listen to the port 2000');
+app.listen(PORT, () => {
+  console.log(`server listen to the port ${PORT}`);
 });
 
 // coba bisa gak

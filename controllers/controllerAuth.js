@@ -1,6 +1,6 @@
 const { User } = require('../models');
 const bcrypt = require('bcryptjs');
-const sendEmail = require('../helpers/send_email');
+const { sendEmail } = require('../helpers/send_email');
 class ControllerAuth {
   static renderLogin(req, res) {
     const { error } = req.query;
@@ -20,7 +20,7 @@ class ControllerAuth {
           if (isValidPassword) {
             req.session.userId = user.id;
             req.session.role = user.role;
-            req.session.email=user.email;
+            req.session.email = user.email;
             if (user.role === 'admin') {
               return res.redirect('/admin');
             } else {
@@ -53,7 +53,6 @@ class ControllerAuth {
       .then((result) => {
         sendEmail(email);
         res.redirect('/user/login');
-        
       })
       .catch((err) => {
         console.log(err);

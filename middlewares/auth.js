@@ -23,4 +23,13 @@ const checkIsAdmin = (req, res, next) => {
   }
 };
 
-module.exports = { checkedIsLogOut, checkedIsLogin, checkIsAdmin };
+
+const checkIsUser = (req, res, next) => {
+  if (req.session.role !== 'user') {
+    res.redirect('/admin')
+  } else {
+    next()
+  }
+}
+
+module.exports = { checkedIsLogOut, checkedIsLogin, checkIsAdmin,checkIsUser };

@@ -1,21 +1,22 @@
 const express = require('express');
 const Controller = require('../controllers/controllers');
-const { checkedIsLogin, checkIsAdmin } = require('../middlewares/auth');
+const { checkedIsLogin, checkIsAdmin, checkIsUser } = require('../middlewares/auth');
 const route = express.Router();
 const authRoute = require('./auth');
 
 route.use('/user', authRoute);
 
 route.use(checkedIsLogin);
-route.get('/', Controller.userHome);
+// route.use(checkIsUser)
+route.get('/', checkIsUser,Controller.userHome);
 
-route.get('/book/detail/:id', Controller.bookDetail);
-route.get('/borrow/:id', Controller.borrowBook);
-route.get('/mybook', Controller.myBook);
-route.get('/profile', Controller.renderUserProfile);
-route.get('/profile/edit', Controller.renderUserEditProfile);
-route.post('/profile/edit', Controller.postEditProfile);
-route.get('/returnBook/:id', Controller.returnBook);
+route.get('/book/detail/:id',checkIsUser, Controller.bookDetail);
+route.get('/borrow/:id', checkIsUser,Controller.borrowBook);
+route.get('/mybook',checkIsUser, Controller.myBook);
+route.get('/profile',checkIsUser, Controller.renderUserProfile);
+route.get('/profile/edit',checkIsUser, Controller.renderUserEditProfile);
+route.post('/profile/edit',checkIsUser, Controller.postEditProfile);
+route.get('/returnBook/:id',checkIsUser, Controller.returnBook);
 
 // middleware untuk cek role admin
 route.use(checkIsAdmin);

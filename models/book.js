@@ -10,15 +10,17 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Book.belongsTo(models.Category);
+      Book.hasMany(models.Receipt)
     }
   }
   Book.init(
     {
-      title: DataTypes.STRING,
+      tittle: DataTypes.STRING,
       author: DataTypes.STRING,
       isbn: DataTypes.STRING,
       stock: DataTypes.INTEGER,
       CategoryId: DataTypes.INTEGER,
+      imgUrl:DataTypes.STRING
     },
     {
       sequelize,

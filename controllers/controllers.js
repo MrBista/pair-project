@@ -1,4 +1,4 @@
-const{Category,Book,User,Recipe,Profile}= require('../models/index')
+const{Category,Book,User,Receipt,Profile}= require('../models/index')
 
 class Controller {
   static userHome(req, response) {
@@ -8,9 +8,23 @@ class Controller {
     .then((result) => {
       response.render('user',{result})
     }).catch((err) => {
-      response.send('err')
+      response.send(err)
     });
 
+  }
+
+  static bookDetail(req,response){
+    const id=req.params.id
+    Book.findOne({
+      where:{
+        id:id
+      }
+    })
+    .then((result) => {
+      response.render('bookDetail',{result})
+    }).catch((err) => {
+      response.send(err)
+    });
   }
 
   static homeAdmin(req, res) {
@@ -57,7 +71,56 @@ class Controller {
       response.send(err);
     });
   }
-  
+
+  static borrowBook(req,response){
+    const id=req.params.id
+    console.log(id);
+    let today= new Date();
+    let tommorow= new Date();
+    tommorow.setDate(today.getDate()+3);
+    let result;
+    Book.findOne({
+      include:Category,
+      where:{
+        id:id,
+        
+      }
+    })
+    .then((data) => {
+      result=data
+      console.log(data);
+      return Receipt.create({
+        UserId:req.session.userId,
+        BookId:result.id,
+        CategoryId:result.Category.id,
+        checkOutDate: today,
+        expiredDate: tommorow,
+      })
+    .then((value) => {
+      response.redirect('back')
+    })
+    }).catch((err) => {
+      console.log(err);
+      response.send(err)
+    });
+  }
+
+  static myBook(req,response){
+
+    Receipt.findAll({
+      include:Book,
+     where:{
+      UserId:req.session.userId
+     }   
+    })
+    .then((data) => {
+      response.render('myBook',{data})
+    })
+    .catch((err) => {
+      console.log(err);
+      response.send(err)
+    });
+  }
 
 }
 

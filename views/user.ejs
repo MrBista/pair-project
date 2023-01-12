@@ -27,7 +27,11 @@
             class="w-[100%] border border-black flex justify-center mt-1 rounded-lg"
           >
             <br />
-            <a href="/borrow/<%=el.id%>"> This Shit</a>
+            <% if (el.stock==='0') { %>
+             ejs <a href="/"><button disabled>Out of stock</button></a>
+            <% } else{ %>
+            <a href="/borrow/<%=el.id%>">Borrow This Book!</a>
+            <% } %> 
           </div>
         </div>
         <% }) %>

@@ -1,11 +1,14 @@
+const { Op } = require('sequelize');
+const timeSince = require('../helpers/expiredAgo');
 const { sendEmailCheckout } = require('../helpers/send_email');
 const { Category, Book, User, Receipt, Profile } = require('../models/index');
 
 class Controller {
   static userHome(req, response) {
-    Book.findAll()
+    Book.findAll({where:{stock:{[Op.gt]:0}}})
       .then((result) => {
         // response.send(result);
+
         response.render('user', { result });
       })
       .catch((err) => {
@@ -154,7 +157,8 @@ class Controller {
       },
     })
       .then((data) => {
-        response.render('myBook', { data });
+        
+        response.render('myBook', { data,timeSince });
       })
       .catch((err) => {
         console.log(err);
@@ -162,6 +166,34 @@ class Controller {
       });
   }
 
+  static returnBook(req,response){
+    let bookId;
+    const id=req.params.id;
+   
+    Receipt.findOne({
+      where:{
+        id:id
+      }
+    })
+    .then((result) => {
+      bookId=result.BookId;
+      return Book.increment({ stock: 1 }, { where: { id: bookId } })
+    })
+    .then((data) => {
+      return Receipt.destroy({
+        where: {
+          id: id
+        }
+      }) 
+    })
+    .then((value) => {
+      response.redirect('back')
+    })
+    .catch((err) => {
+      response.send(err)
+    });
+    
+  }
   static renderUserProfile(req, response) {
     let id = req.session.userId;
     Profile.findOne({
@@ -189,12 +221,29 @@ class Controller {
     })
       .then((user) => {
         // response.send(data);
-
+        console.log(user);
         response.render('editProfile', { user });
       })
       .catch((err) => {
         response.send(err);
       });
+  }
+
+  static postEditProfile(req,response){
+    let id=req.session.userId;
+    console.log(req.session);
+    const{name,imgurl,birtdate,gender}=req.body
+    console.log(name,imgurl,birtdate,gender);
+    Profile.update({ name: name,imgurl:imgurl,birtdate:birtdate,gender:gender }, {
+      where: {
+        UserId: id
+      }
+    })
+    .then((result) => {
+      response.redirect('/profile')
+    }).catch((err) => {
+      response.send(err)
+    });
   }
 }
 

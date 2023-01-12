@@ -14,6 +14,8 @@ route.get('/borrow/:id', Controller.borrowBook);
 route.get('/mybook', Controller.myBook);
 route.get('/profile', Controller.renderUserProfile);
 route.get('/profile/edit', Controller.renderUserEditProfile);
+route.post('/profile/edit', Controller.postEditProfile);
+route.get('/returnBook/:id', Controller.returnBook);
 
 // middleware untuk cek role admin
 route.use(checkIsAdmin);

@@ -42,28 +42,28 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          isStrong(value) {
-            let strongPassword = new RegExp(
-              '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})'
-            );
-            let mediumPassword = new RegExp(
-              '((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))'
-            );
-            if (strongPassword.test(value)) {
-              throw new Error('Password Strong');
-            } else if (mediumPassword.test(value)) {
-              throw new Error('Password almost strong');
-            } else {
-              throw new Error('Password too weak');
-            }
-          },
-          min: {
-            args: 10,
-            msg: '',
-          },
-        },
+        // allowNull: false,
+        // validate: {
+        //   isStrong(value) {
+        //     let strongPassword = new RegExp(
+        //       '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})'
+        //     );
+        //     let mediumPassword = new RegExp(
+        //       '((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))'
+        //     );
+        //     if (strongPassword.test(value)) {
+        //       throw new Error('Password Strong');
+        //     } else if (mediumPassword.test(value)) {
+        //       throw new Error('Password almost strong');
+        //     } else {
+        //       throw new Error('Password too weak');
+        //     }
+        //   },
+        //   min: {
+        //     args: 10,
+        //     msg: '',
+        //   },
+        // },
       },
       role: DataTypes.STRING,
     },

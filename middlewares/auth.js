@@ -1,6 +1,5 @@
 const checkedIsLogOut = (req, res, next) => {
   if (req.session.userId) {
-    res.redirect(`/`);
   } else {
     next();
   }
@@ -15,4 +14,12 @@ const checkedIsLogin = (req, res, next) => {
   }
 };
 
-module.exports = { checkedIsLogOut, checkedIsLogin };
+const checkIsAdmin = (req, res, next) => {
+  if (req.session.role !== 'admin') {
+    res.redirect('/');
+  } else {
+    next();
+  }
+};
+
+module.exports = { checkedIsLogOut, checkedIsLogin, checkIsAdmin };

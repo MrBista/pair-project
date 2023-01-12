@@ -121,7 +121,6 @@ class Controller {
       response.send(err)
     });
   }
-  
 
 }
 

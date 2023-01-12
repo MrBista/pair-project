@@ -122,26 +122,23 @@ class Controller {
       },
     })
       .then((data) => {
-        result = data;
-        console.log(data);
-        return Receipt.create({
-          UserId: req.session.userId,
-          BookId: result.id,
-          CategoryId: result.Category.id,
-          checkOutDate: today,
-          expiredDate: tommorow,
-        }).then((value) => {
-          response.redirect('back');
-        });
+      result = data;
+      console.log(data);
+      return Receipt.create({
+        UserId: req.session.userId,
+        BookId: result.id,
+        CategoryId: result.Category.id,
+        checkOutDate: today,
+        expiredDate: tommorow,
       })
-
+    })
       .then((value) => {
         return Book.decrement({ stock: 1 }, { where: { id: id } });
       })
       .then((value) => {
         let mail = req.session.email;
-        sendEmailCheckout(mail, today, tommorow);
         response.redirect('back');
+        sendEmailCheckout(mail, today, tommorow);
       })
       .catch((err) => {
         console.log(err);

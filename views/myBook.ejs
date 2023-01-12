@@ -32,6 +32,8 @@ rel="stylesheet"
             <th scope="col">Image</th>
             <th scope="col">Title</th>
             <th scope="col">Author</th>
+            <th scope="col">Borrow Date</th>
+            <th scope="col">Expired Date</th>
           </tr>
         </thead>
         <tbody>
@@ -41,6 +43,8 @@ rel="stylesheet"
                     <td> <img src="<%= el.Book.imgUrl  %>" alt="" style="max-width:100px;"></td>
                     <td><%= el.Book.tittle %> </td>
                     <td><%= el.Book.author %> </td>
+                    <td><%= el.Book.author %> </td>
+                    <td><%= el.checkOutDate %> </td>
                     <td><%= el.Book.author %> </td>
                   </tr>
             <% }) %>

@@ -16,7 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       Receipt.belongsTo(models.User);
       Receipt.belongsTo(models.Book);
     }
-   
+      get date(){
+        
+      }
   }
   Receipt.init({
     UserId:{

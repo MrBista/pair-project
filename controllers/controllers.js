@@ -1,3 +1,4 @@
+const { sendEmailCheckout } = require('../helpers/send_email');
 const{Category,Book,User,Receipt,Profile}= require('../models/index')
 
 class Controller {
@@ -96,7 +97,12 @@ class Controller {
         checkOutDate: today,
         expiredDate: tommorow,
       })
-    .then((value) => {
+    .then((value) => {     
+      return Book.decrement({stock: 1}, { where: { id: id } })
+    })
+    .then((value) => { 
+      let mail=req.session.email
+      sendEmailCheckout(mail,today,tommorow);
       response.redirect('back')
     })
     }).catch((err) => {

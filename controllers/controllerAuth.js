@@ -19,7 +19,11 @@ class ControllerAuth {
           if (isValidPassword) {
             req.session.userId = user.id;
             req.session.role = user.role;
-            return res.redirect('/');
+            if (user.role === 'admin') {
+              return res.redirect('/admin');
+            } else {
+              return res.redirect('/');
+            }
           } else {
             const errorMessage = 'Invalid username/password';
             return res.redirect(`/user/login?error=${errorMessage}`);

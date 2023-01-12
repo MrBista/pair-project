@@ -1,14 +1,13 @@
-const express = require('express')
-const Controller = require('../controllers/controllers')
-const { checkedIsLogin } = require('../middlewares/auth')
-const route = express.Router()
-const authRoute = require('./auth')
+const express = require('express');
+const Controller = require('../controllers/controllers');
+const { checkedIsLogin } = require('../middlewares/auth');
+const route = express.Router();
+const authRoute = require('./auth');
 
-route.use('/',authRoute)
+route.use('/user', authRoute);
 
-route.use(checkedIsLogin)
+route.use(checkedIsLogin);
 
-route.get('/', Controller.renderHome)
+route.get('/', Controller.renderHome);
 
-
-module.exports = route
+module.exports = route;

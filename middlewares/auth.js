@@ -1,22 +1,18 @@
 const checkedIsLogOut = (req, res, next) => {
-  if (req.session.role) {
-    if(req.session.role==='admin'){
-      res.redirect('/admin')
-    }else{
-      res.redirect(`/`)
-    }
+  if (req.session.userId) {
+    res.redirect(`/`);
   } else {
-    next()
+    next();
   }
-}
+};
 
 const checkedIsLogin = (req, res, next) => {
-  if (!req.session.role) {
+  if (!req.session.userId) {
     // const errMessage = 'Please Login First'
-    res.redirect(`/login`)
+    res.redirect(`/user/login`);
   } else {
-    next()
+    next();
   }
-}
+};
 
-module.exports = {checkedIsLogOut, checkedIsLogin}
+module.exports = { checkedIsLogOut, checkedIsLogin };

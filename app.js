@@ -22,8 +22,8 @@ app.use(
 
 app.use('/', route);
 
-app.listen(2000, () => {
-  console.log('server listen to the port 2000');
+app.listen(8080, () => {
+  console.log('server listen to the port 8080');
 });
 
 // coba bisa gak

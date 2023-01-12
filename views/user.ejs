@@ -33,12 +33,14 @@
       </div>
     </nav>
     <main class="w-[90vw] max-w-[1200px] border-2 border-black m-auto">
-      <h2>Category Books</h2>
+      <% books.forEach(({name,Books}) => { %>
+      <h2><%= name%></h2>
+      <% Books.forEach(({id, imgUrl}) => { %>
       <div class="w-[100%] flex justify-center flex-wrap gap-7">
         <div class="card w-[250px] mt-3 shadow-2xl">
           <div class="w-[100%] h-[300px] rounded-lg">
             <img
-              src="https://source.unsplash.com/4cA0t0_7LOc"
+              src="<%=imgUrl%>"
               alt=""
               class="object-cover w-[100%] h-[100%] rounded-sm shadow-lg"
             />
@@ -52,6 +54,8 @@
           </div>
         </div>
       </div>
+
+      <% }) %> <% }) %>
     </main>
   </body>
 </html>

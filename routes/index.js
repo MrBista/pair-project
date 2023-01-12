@@ -9,6 +9,7 @@ route.use('/user', authRoute);
 route.use(checkedIsLogin);
 
 route.get('/', Controller.userHome);
+route.get('/user-book', Controller.userBook);
 
 // middleware untuk cek role admin
 route.use(checkIsAdmin);

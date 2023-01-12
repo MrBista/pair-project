@@ -1,4 +1,6 @@
-const { Category, Book, User, Receipt, Profile } = require('../models/index');
+
+const { sendEmailCheckout } = require('../helpers/send_email');
+const{Category,Book,User,Receipt,Profile}= require('../models/index')
 
 class Controller {
   static userHome(req, response) {
@@ -132,10 +134,20 @@ class Controller {
           response.redirect('back');
         });
       })
-      .catch((err) => {
-        console.log(err);
-        response.send(err);
-      });
+
+    .then((value) => {     
+      return Book.decrement({stock: 1}, { where: { id: id } })
+    })
+    .then((value) => { 
+      let mail=req.session.email
+      sendEmailCheckout(mail,today,tommorow);
+      response.redirect('back')
+    })
+    }).catch((err) => {
+      console.log(err);
+      response.send(err)
+    });
+
   }
 
   static myBook(req, response) {

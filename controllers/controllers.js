@@ -5,7 +5,14 @@ const { Category, Book, User, Receipt, Profile } = require('../models/index');
 
 class Controller {
   static userHome(req, response) {
-    Book.findAll({where:{stock:{[Op.gt]:0}}})
+    const {search} = req.query
+    let option = {where:{stock:{[Op.gt]:0}}}
+    if (search) {
+      option.where.tittle = {
+        [Op.iLike]:`%${search}%`
+      }
+    }
+    Book.findAll(option)
       .then((result) => {
         // response.send(result);
 

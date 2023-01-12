@@ -51,11 +51,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          
-          min: {
-            args: 10,
-            msg: 'Minimum word is 10',
-          },
           notEmpty: {
             msg:'Please filled password section'
           },

@@ -43,8 +43,6 @@ class ControllerAuth {
 
   static renderRegister(req, res) {
     let errors = req.query.error;
-    errors = errors.split(';');
-    // res.send(errors);
     res.render('register', { errorMessage: errors });
   }
 

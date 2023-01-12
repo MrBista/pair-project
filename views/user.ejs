@@ -8,7 +8,33 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-indigo-50">
-    <%- include('./navbar.ejs') %>
+    <nav class="flex items-center justify-center">
+  <div
+    class="w-[90vw] max-w-[1200px] flex px-1 h-[70px] items-center justify-between"
+  >
+    <h1 class="text-3xl">Per<span class="text-indigo-400">Lib</span></h1>
+    <div class="w-[500px]">
+      <form method="get">
+        <input
+          type="text"
+          class="w-[100%] p-1 rounded-lg border-none focus:outline-none"
+          placeholder="search books"
+          name="search"
+        />
+      </form>
+    </div>
+    <ul class="flex justify-between">
+      <li><a href="/mybook" class="text-lg text-indigo-500">My Book</a></li>
+      <li>
+        <a href="/profile" class="text-lg ml-9 text-indigo-500">My Profile</a>
+      </li>
+      <li>
+        <a href="/user/logout" class="text-lg ml-9 text-indigo-500">Log Out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
     <main class="w-[90vw] max-w-[1200px] border-2 border-black m-auto">
       <h2>Category Books</h2>
       <div class="w-[100%] flex justify-center flex-wrap gap-7">
@@ -28,7 +54,7 @@
           >
             <br />
             <% if (el.stock==='0') { %>
-             ejs <a href="/"><button disabled>Out of stock</button></a>
+            <a href="/"><button disabled>Out of stock</button></a>
             <% } else{ %>
             <a href="/borrow/<%=el.id%>">Borrow This Book!</a>
             <% } %> 

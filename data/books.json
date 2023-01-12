@@ -1,0 +1,50 @@
+[
+  {
+    "tittle": "Hunger game",
+    "author": "Bista",
+    "isbn": "456yujgty8ij",
+    "imgUrl": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1586722975l/2767052._SY475_.jpg",
+    "stock": 20,
+    "CategoryId": 2
+  },
+  {
+    "tittle": "Atomic Habit",
+    "author": "Bisma",
+    "imgUrl": "https://covers.openlibrary.org/b/id/12539702-M.jpg",
+    "isbn": "456yujgty8ijasdfjk",
+    "stock": 25,
+    "CategoryId": 5
+  },
+  {
+    "tittle": "The Other Women",
+    "author": "Bisma",
+    "imgUrl": "https://covers.openlibrary.org/w/id/10528998-M.jpg",
+    "isbn": "456yujgty8ijasdfjk",
+    "stock": 25,
+    "CategoryId": 5
+  },
+  {
+    "tittle": "Josey Wales",
+    "author": "Bisma",
+    "imgUrl": "https://covers.openlibrary.org/w/id/629216-M.jpg",
+    "isbn": "456yujgty8ijasdfjk",
+    "stock": 25,
+    "CategoryId": 1
+  },
+  {
+    "tittle": "Sthepen King",
+    "author": "Bisma",
+    "imgUrl": "https://covers.openlibrary.org/w/id/8569284-M.jpg",
+    "isbn": "456yujgty8ijasdfjk",
+    "stock": 25,
+    "CategoryId": 4
+  },
+  {
+    "tittle": "Insomnia",
+    "author": "Bisma",
+    "imgUrl": "https://covers.openlibrary.org/w/id/7886954-M.jpg",
+    "isbn": "456yujgty8ijasdfjk",
+    "stock": 25,
+    "CategoryId": 3
+  }
+]

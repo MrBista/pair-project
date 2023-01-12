@@ -34,6 +34,7 @@ rel="stylesheet"
             <th scope="col">Author</th>
             <th scope="col">Borrow Date</th>
             <th scope="col">Expired Date</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -43,9 +44,9 @@ rel="stylesheet"
                     <td> <img src="<%= el.Book.imgUrl  %>" alt="" style="max-width:100px;"></td>
                     <td><%= el.Book.tittle %> </td>
                     <td><%= el.Book.author %> </td>
-                    <td><%= el.Book.author %> </td>
-                    <td><%= el.checkOutDate %> </td>
-                    <td><%= el.Book.author %> </td>
+                    <td><%= el.checkOutDateG %> </td>
+                    <td> Expired in <%=  timeSince(el.expiredDate,el.checkOutDate) %>  </td>
+                    <td><a href="/returnBook/<%= el.id %> "><button class="btn btn-success">Return Book</button></a> </td>
                   </tr>
             <% }) %>
           

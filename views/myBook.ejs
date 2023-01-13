@@ -23,7 +23,25 @@ rel="stylesheet"
 />
 </head>
 <body>
-    <H1>My Book</H1>
+  <nav style="display: flex; justify-content: center; align-items: center;" >
+  <div style="width: 90vw; max-width: 1200px; display: flex; justify-content: space-between; height: 90px; align-items: center;">
+    <a  onclick="location.href='/'"
+      style="font-size: 2.2rem;" >Per<span >Lib</span></a
+    >
+    <ul style="display: flex; list-style: none;">
+      <li style="padding: 0.25rem .85rem;"><a href="/mybook" >My Book</a></li>
+      <li style="padding: 0.25rem .85rem;">
+        <a href="/profile" >My Profile</a>
+      </li style="padding: 0.25rem .85rem;">
+      <li style="padding: 0.25rem .85rem;">
+        <a href="/user/logout" >Log Out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+    <h1 style="text-align: center;">My Book</h1>
 
     <table class="table">
         <thead>

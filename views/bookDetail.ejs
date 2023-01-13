@@ -5,45 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!-- Font Awesome -->
-<link
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-rel="stylesheet"
-/>
-<!-- Google Fonts -->
-<link
-href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-rel="stylesheet"
-/>
-<!-- MDB -->
-<link
-href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css"
-rel="stylesheet"
-/>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <center>
-      <h1>Book</h1>
-
-      <div class="conteiner">
-        <div class="row">
-          <center>
-          <h2><%= result.tittle %></h2>
-          <h3><%= result.author %></h3>
-          <h5><%= result.isbn %></h5>
-          <h5><%= result.stock %></h5>
-          <img src="<%= result.imgUrl %>" style="max-width: 100px;" alt="">
-          <a href="/borrow/<%=result.id%>"> <button class="btn btn-primary">Borrow This Book</button></a>
-        </center>
-        </div>
+<body class="bg-indigo-50">
+  <nav class="flex items-center justify-center">
+    <div
+      class="w-[90vw] max-w-[1200px] flex px-1 h-[70px] items-center justify-between"
+    >
+      <a class="text-3xl" onclick="location.href='/'"
+        >Per<span class="text-indigo-400">Lib</span></a
+      >
+      <ul class="flex justify-between">
+        <li><a href="/mybook" class="text-lg text-indigo-500">My Book</a></li>
+        <li>
+          <a href="/profile" class="text-lg ml-9 text-indigo-500">My Profile</a>
+        </li>
+        <li>
+          <a href="/user/logout" class="text-lg ml-9 text-indigo-500">Log Out</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <main class="w-[90vw] max-w-[1200px] m-auto ">
+    <div class="flex flex-col items-center justify-center ">
+      <img src="<%= result.imgUrl %>" class="object-cover block m-auto" alt="">
+      <div class="w-64">
+        <h2 class="text-center font-semibold text-lg"><%= result.tittle %> By <%= result.author %></h2>
+        <h5 class="font-medium mt-2"><span class="font-semibold">ISBN BOOk:</span><%= result.isbn %></h5>
+        <h5 class="font-medium"><span class="font-semibold">Stock BOOK:</span><%= result.stock %></h5>
+        <h5 class="font-medium"> <span class="font-semibold">Category BOOK:</span> <%= result.Category.name%></h5>
+        <a href="/borrow/<%=result.id%>" class="text-center block mt-4 text-indigo-900 font-bold">Borrow This Book</a>
       </div>
-    </center>
 
-    
-    <!-- MDB -->
-<script
-type="text/javascript"
-src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"
-></script>
+    </div>
+  </main>
+
 </body>
 </html>

@@ -1,5 +1,5 @@
 var nodemailer = require('nodemailer');
-
+// Masokkk
 function sendEmail(mail) {
   var transporter = nodemailer.createTransport({
     service: 'gmail',

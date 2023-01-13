@@ -11,35 +11,36 @@
 
 <body class="bg-indigo-50">
   <%- include('./navbar.ejs') %>
-  <main class="w-[90vw] max-w-[1200px] border-2 border-black m-auto">
-    <h2>Category Books</h2>
-    <div class="w-[100%] flex justify-center flex-wrap gap-7">
-      <% result.forEach(el => { %>
-      <div class="card w-[250px] mt-3 shadow-2xl">
-        <div class="w-[100%] h-[300px] rounded-lg">
-          <a href="/book/detail/<%= el.id%>">
-            <img src="<%= el.imgUrl %> " alt="" class="object-cover w-[100%] h-[100%] rounded-sm shadow-lg" />
-          </a>
-        </div>
-        <p> Title:<%= el.tittle %> <br>
-          Stock :<%= el.stock %> <br>Author:<%= el.author %> <br>
-          ISBN: <%= el.isbn %> </p>
-        <%if( el.stock===0){ %>
-
-        <div class="w-[100%] border border-black flex justify-center mt-1 rounded-lg">
-          <br />
-          <a href="/"> <button disabled>Out Of Stock Book!</button></a>
-        </div>
+  <h2 class="text-center mt-15 text-5xl">Our <span class="text-indigo-400">Book</span> </h2>
+  <div class="bg-indigo-400 w-28 h-1 rounded-md m-auto my-3"></div>
+  <main class="w-[90vw] max-w-[1200px]  m-auto">
+    <div class="w-[100%] flex justify-center flex-wrap gap-10">
+        <% result.forEach(({id,imgUrl,tittle,author,stock}) => { %>
+          <div class="card w-[250px] mt-3 shadow-2xl">
+            <div class="w-[100%] h-[300px] rounded-lg">
+              <a href="/book/detail/<%= id%>">
+                <img src="<%= imgUrl %> " alt="" class="object-cover w-[100%] h-[100%] rounded-sm shadow-lg" />
+              </a>
+            </div>
+            <div class="px-2 py-3">
+              <p class="text-center font-semibold"><%= tittle %> by <%= author %> </p>
+              <p class="text-center font-semibold">Stock :<%= stock %> </p>
+            </div>
+            
+            <%if( stock===0){ %>
+            <div class="w-[100%] flex justify-center mt-1 rounded-lg">
+              <a href="/"> <button disabled>Out Of Stock Book!</button></a> 
+            </div>
+            <% }else{ %>
+              <div class="w-[100%] flex justify-center mt-1 rounded-lg">
+                <a href="/borrow/<%=id%>">Borrow This Book!</a>
+              </div>
+              <% } %>
+            </div>
+        
+        <% }) %>
       </div>
-      <% }else{ %>
-      <div class="w-[100%] border border-black flex justify-center mt-1 rounded-lg">
-        <br />
-        <a href="/borrow/<%=el.id%>">Borrow This Book!</a>
-      </div>
-    </div>
-    <% } %>
-    <% }) %>
-    </div>
+    </div> 
   </main>
 </body>
 

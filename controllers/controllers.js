@@ -5,30 +5,26 @@ const { Category, Book, User, Receipt, Profile } = require('../models/index');
 
 class Controller {
   static userHome(req, response) {
-      const input=req.query.input;
-      // {where:{stock:{[Op.gt]:0}}}
-      if(!input){
-        Book.findAll()
+    const input = req.query.input;
+    let option = {
+      where: {
+        stock: { [Op.gt]: 0 },
+      },
+      order: [['id', 'DESC']],
+    };
+    if (input) {
+      option.where.tittle = {
+        [Op.iLike]: `%${input}%`,
+      };
+    }
+    Book.findAll(option)
       .then((result) => {
         // response.send(result);
-
         response.render('user', { result });
       })
       .catch((err) => {
         response.send(err);
       });
-      }else if(input){
-      Book.findAll({where:{tittle:{[Op.iLike]: input},stock:{[Op.gt]:0}}})
-      .then((result) => {
-        // response.send(result);
-
-        response.render('user', { result });
-      })
-      .catch((err) => {
-        response.send(err);
-      });
-      }
-      
   }
 
   static bookDetail(req, response) {
@@ -37,6 +33,7 @@ class Controller {
       where: {
         id: id,
       },
+      include:Category
     })
       .then((result) => {
         response.render('bookDetail', { result });
@@ -140,16 +137,16 @@ class Controller {
       },
     })
       .then((data) => {
-      result = data;
-      console.log(data);
-      return Receipt.create({
-        UserId: req.session.userId,
-        BookId: result.id,
-        CategoryId: result.Category.id,
-        checkOutDate: today,
-        expiredDate: tommorow,
+        result = data;
+        console.log(data);
+        return Receipt.create({
+          UserId: req.session.userId,
+          BookId: result.id,
+          CategoryId: result.Category.id,
+          checkOutDate: today,
+          expiredDate: tommorow,
+        });
       })
-    })
       .then((value) => {
         return Book.decrement({ stock: 1 }, { where: { id: id } });
       })
@@ -172,8 +169,7 @@ class Controller {
       },
     })
       .then((data) => {
-        
-        response.render('myBook', { data,timeSince });
+        response.render('myBook', { data, timeSince });
       })
       .catch((err) => {
         console.log(err);
@@ -181,33 +177,32 @@ class Controller {
       });
   }
 
-  static returnBook(req,response){
+  static returnBook(req, response) {
     let bookId;
-    const id=req.params.id;
-   
+    const id = req.params.id;
+
     Receipt.findOne({
-      where:{
-        id:id
-      }
+      where: {
+        id: id,
+      },
     })
-    .then((result) => {
-      bookId=result.BookId;
-      return Book.increment({ stock: 1 }, { where: { id: bookId } })
-    })
-    .then((data) => {
-      return Receipt.destroy({
-        where: {
-          id: id
-        }
-      }) 
-    })
-    .then((value) => {
-      response.redirect('back')
-    })
-    .catch((err) => {
-      response.send(err)
-    });
-    
+      .then((result) => {
+        bookId = result.BookId;
+        return Book.increment({ stock: 1 }, { where: { id: bookId } });
+      })
+      .then((data) => {
+        return Receipt.destroy({
+          where: {
+            id: id,
+          },
+        });
+      })
+      .then((value) => {
+        response.redirect('back');
+      })
+      .catch((err) => {
+        response.send(err);
+      });
   }
   static renderUserProfile(req, response) {
     let id = req.session.userId;
@@ -229,6 +224,7 @@ class Controller {
 
   static renderUserEditProfile(req, response) {
     const id = req.session.userId;
+    const errMessage = req.query.errors
     Profile.findOne({
       where: {
         UserId: id,
@@ -236,32 +232,39 @@ class Controller {
     })
       .then((user) => {
         // response.send(data);
-        console.log(user);
-        response.render('editProfile', { user });
+        console.log(user.birtdateS,'<======');
+        response.render('editProfile', { user ,errMessage});
       })
       .catch((err) => {
         response.send(err);
       });
   }
 
-  static postEditProfile(req,response){
-    let id=req.session.userId;
+  static postEditProfile(req, response) {
+    let id = req.session.userId;
     console.log(req.session);
-    const{name,imgurl,birtdate,gender}=req.body
-    console.log(name,imgurl,birtdate,gender);
-    Profile.update({ name: name,imgurl:imgurl,birtdate:birtdate,gender:gender }, {
-      where: {
-        UserId: id
+    const { name, imgurl, birtdate, gender } = req.body;
+    console.log(name, imgurl, birtdate, gender);
+    Profile.update(
+      { name: name, imgurl: imgurl, birtdate: birtdate, gender: gender },
+      {
+        where: {
+          UserId: id,
+        },
       }
-    })
-    .then((result) => {
-      response.redirect('/profile')
-    }).catch((err) => {
-      response.send(err)
-    });
+    )
+      .then((result) => {
+        response.redirect('/profile');
+      })
+      .catch((err) => {
+        if (err.name === 'SequelizeValidationError') {
+          let errMessage = err.errors.map(el => el.message)
+          response.redirect(`/profile/edit?errors=${errMessage.join(';')}`)
+        }else {
+          response.send(err);
+        }
+      });
   }
-
-  
 }
 
 module.exports = Controller;

@@ -23,10 +23,55 @@ module.exports = (sequelize, DataTypes) => {
   }
   Profile.init(
     {
-      name: DataTypes.STRING,
-      imgurl: DataTypes.STRING,
-      birtdate: DataTypes.DATE,
-      gender: DataTypes.STRING,
+      name: {
+        type:DataTypes.STRING,
+        allowNull:false,
+        validate:{
+          notEmpty:{
+            msg:'Please fill name'
+          },
+          notNull:{
+            msg:'Please fill name'
+          }
+        }
+      },
+      imgurl: {
+        type:DataTypes.STRING,
+        allowNull:false,
+        validate:{
+          notEmpty:{
+            msg:'Please fill img url'
+          },
+          notNull:{
+            msg:'Please fill img url'
+          }
+        }
+      },
+      birtdate: {
+        type:DataTypes.DATE,
+        allowNull:false,
+        validate:{
+          notEmpty:{
+            msg:'Please fill birth date'
+          },
+          notNull: {
+            msg:'Please fill birth date'
+          }
+        }
+        
+      },
+      gender: {
+        type:DataTypes.STRING,
+        allowNull:false,
+        validate:{
+          notEmpty:{
+            msg:'Please chose gender'
+          },
+          notNull:{
+            msg:'Please chose gender'
+          }
+        }
+      },
       UserId: DataTypes.INTEGER,
     },
     {

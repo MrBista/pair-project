@@ -34,7 +34,12 @@
         <h5 class="font-medium mt-2"><span class="font-semibold">ISBN BOOk:</span><%= result.isbn %></h5>
         <h5 class="font-medium"><span class="font-semibold">Stock BOOK:</span><%= result.stock %></h5>
         <h5 class="font-medium"> <span class="font-semibold">Category BOOK:</span> <%= result.Category.name%></h5>
-        <a href="/borrow/<%=result.id%>" class="text-center block mt-4 text-indigo-900 font-bold">Borrow This Book</a>
+        <% if (result.stock!==0) { %>
+          <a href="/borrow/<%=result.id%>" class="text-center block mt-4 text-indigo-900 font-bold"><button>Borrow This Book</button></a>
+         
+        <% } else{ %>
+        <a href="/borrow/<%=result.id%>" class="text-center block mt-4 text-indigo-900 font-bold"><button disabled>Out of stock </button></a>
+        <% } %> 
       </div>
 
     </div>
